@@ -1,0 +1,2 @@
+class BillingConfigurationError(Exception):
+    pass

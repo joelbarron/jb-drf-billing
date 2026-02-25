@@ -1,0 +1,16 @@
+[project]
+name = "jb-drf-billing"
+version = "0.1.0"
+description = "Reusable billing/subscriptions foundations for Django/DRF projects"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "Django>=5.0",
+  "djangorestframework>=3.15",
+  "jb-drf-auth>=0.1.10",
+  "requests>=2.31",
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
