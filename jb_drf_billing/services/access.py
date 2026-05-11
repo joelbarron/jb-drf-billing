@@ -1,6 +1,6 @@
 from django.apps import apps
 
-from jb_drf_billing.conf import get_setting, resolve_model
+from jb_drf_billing.conf import get_setting
 from jb_drf_billing.policies.access import DefaultAccessPolicy
 from jb_drf_billing.services.entitlements import EntitlementResolver
 

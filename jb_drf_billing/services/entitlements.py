@@ -1,4 +1,3 @@
-from django.apps import apps
 from django.db import transaction
 from django.utils import timezone
 

@@ -1,2 +1,2 @@
-from .access import DefaultAccessPolicy
-from .features import DefaultFeatureVisibilityPolicy
+from .access import DefaultAccessPolicy as DefaultAccessPolicy
+from .features import DefaultFeatureVisibilityPolicy as DefaultFeatureVisibilityPolicy

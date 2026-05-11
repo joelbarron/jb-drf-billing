@@ -1,3 +1,3 @@
-from .catalog import BillingCatalogResponseSerializer
-from .status import BillingStatusResponseSerializer
-from .access import AccessCheckRequestSerializer, AccessCheckResponseItemSerializer
+from .catalog import BillingCatalogResponseSerializer as BillingCatalogResponseSerializer
+from .status import BillingStatusResponseSerializer as BillingStatusResponseSerializer
+from .access import AccessCheckRequestSerializer as AccessCheckRequestSerializer, AccessCheckResponseItemSerializer as AccessCheckResponseItemSerializer

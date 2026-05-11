@@ -1,3 +1,3 @@
-from .base import BillingProviderAdapter
-from .revenuecat import RevenueCatAdapter
-from .stripe import StripeBillingAdapter
+from .base import BillingProviderAdapter as BillingProviderAdapter
+from .revenuecat import RevenueCatAdapter as RevenueCatAdapter
+from .stripe import StripeBillingAdapter as StripeBillingAdapter

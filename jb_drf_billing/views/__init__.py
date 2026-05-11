@@ -1,7 +1,7 @@
-from .catalog import BillingCatalogView
-from .status import BillingStatusView
-from .entitlements import BillingEntitlementsView
-from .access import BillingAccessCheckView
-from .mobile import BillingMobileSyncView, BillingMobileRestoreAckView
-from .web import BillingWebCheckoutSessionView, BillingWebPortalSessionView, BillingWebChangePlanView
-from .webhooks import RevenueCatWebhookView, StripeWebhookView
+from .catalog import BillingCatalogView as BillingCatalogView
+from .status import BillingStatusView as BillingStatusView
+from .entitlements import BillingEntitlementsView as BillingEntitlementsView
+from .access import BillingAccessCheckView as BillingAccessCheckView
+from .mobile import BillingMobileSyncView as BillingMobileSyncView, BillingMobileRestoreAckView as BillingMobileRestoreAckView
+from .web import BillingWebCheckoutSessionView as BillingWebCheckoutSessionView, BillingWebPortalSessionView as BillingWebPortalSessionView, BillingWebChangePlanView as BillingWebChangePlanView
+from .webhooks import RevenueCatWebhookView as RevenueCatWebhookView, StripeWebhookView as StripeWebhookView

@@ -1,6 +1,6 @@
 from django.core.checks import Error, Warning, register
 
-from jb_drf_billing.conf import MODEL_SETTING_KEYS, get_providers_settings, get_scope_mode, get_setting
+from jb_drf_billing.conf import get_providers_settings, get_scope_mode, get_setting
 
 
 @register()
