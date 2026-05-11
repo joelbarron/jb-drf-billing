@@ -4,6 +4,26 @@ from jb_drf_billing.conf import get_app_slug, get_scope_mode, get_setting, resol
 from jb_drf_billing.services.entitlements import EntitlementResolver
 
 
+def _is_trial_eligible(user, app_slug, *, billing_customer=None):
+    """User is eligible for the in-app trial when:
+    - The store hasn't reported `trial_consumed` for this billing customer, AND
+    - No RevenueCat subscription exists yet for this app (any status).
+
+    This is informational only — Apple/Google enforce the real intro-offer.
+    """
+    BillingCustomer = resolve_model("BILLING_CUSTOMER_MODEL")
+    Subscription = resolve_model("SUBSCRIPTION_MODEL")
+    customer = billing_customer or BillingCustomer.objects.filter(user=user).first()
+    if customer and (customer.metadata or {}).get("trial_consumed"):
+        return False
+    qs = Subscription.objects.filter(plan__app__slug=app_slug, provider="REVENUECAT")
+    if customer:
+        qs = qs.filter(billing_customer=customer)
+    else:
+        qs = qs.filter(billing_customer__user=user)
+    return not qs.exists()
+
+
 def get_billing_status(*, user, app_slug=None):
     slug = app_slug or get_app_slug()
     Subscription = resolve_model("SUBSCRIPTION_MODEL")
@@ -55,4 +75,8 @@ def get_billing_status(*, user, app_slug=None):
         },
         "entitlements": {"user": entitlements_user, "profiles": profiles_summary},
         "purchaseChannels": {"ios": ["iap"], "android": ["iap", "web"], "web": ["web"]},
+        "trial": {
+            "days": int(get_setting("TRIAL_DAYS") or 0),
+            "eligible": _is_trial_eligible(user, slug, billing_customer=billing_customer),
+        },
     }

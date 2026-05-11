@@ -5,9 +5,17 @@ credentials so the lib can be installed and tested in projects that have
 not enabled Stripe yet. Methods that perform real I/O raise a clear
 NotImplementedError pointing to the next implementation phase.
 
-Phase 4 of the billing roadmap will replace these stubs with real Stripe
-SDK calls (Checkout sessions, customer portal, webhook signature
-verification, subscription sync).
+# TODO[phase-4-stripe]: replace stubs with real Stripe SDK calls.
+# Required:
+#   - Checkout Session create (stripe.checkout.Session.create) with
+#     metadata {userId, profileId, scopeType, planPriceId}.
+#   - Customer Portal Session create.
+#   - Webhook signature verify (stripe.Webhook.construct_event) +
+#     event dispatch: checkout.session.completed, customer.subscription.
+#     {updated,deleted}, invoice.{paid,payment_failed}.
+#   - Customer get-or-create via BillingCustomer.provider_customer_ids['stripe'].
+#   - Update upon webhook → call replace_subscription_grants() like RevenueCat.
+# See PHASE_4_TODO.md at the repo root for the full checklist.
 """
 
 from typing import Any

@@ -11,6 +11,9 @@ def process_revenuecat_webhook(payload, headers=None):
 
 
 def process_stripe_webhook(payload, headers=None):
+    # TODO[phase-4-stripe]: signature verification + event dispatch.
+    # Currently delegates to a stub adapter that returns a noop response.
+    # See PHASE_4_TODO.md.
     adapter = StripeBillingAdapter()
     result = adapter.process_webhook(payload or {}, headers=headers)
     billing_webhook_processed.send(sender=process_stripe_webhook, provider="stripe", result=result)

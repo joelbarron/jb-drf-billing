@@ -1,3 +1,7 @@
+# TODO[phase-4-stripe]: This service currently delegates to a stub Stripe
+# adapter that returns sentinel URLs. When the real adapter ships, the
+# response shape (ok, checkoutUrl, sessionId) stays — only the adapter
+# methods change. See PHASE_4_TODO.md for the full plan.
 from django.apps import apps
 from django.db import transaction
 

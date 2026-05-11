@@ -13,6 +13,7 @@ DEFAULTS = {
     "ENABLE_WEBHOOKS": True,
     "DEFAULT_GRANT_PRIORITY": 100,
     "ACCESS_CHECK_BATCH_LIMIT": 100,
+    "TRIAL_DAYS": 0,
     "FEATURE_FLAGS": {},
     "PROVIDERS": {
         "revenuecat": {

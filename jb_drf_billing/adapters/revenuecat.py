@@ -181,7 +181,28 @@ class RevenueCatAdapter(BillingProviderAdapter):
             provider_subscription_id=str(provider_subscription_id),
             defaults=defaults,
         )
+        self._maybe_mark_trial_consumed(billing_customer, source_data)
         return subscription, created
+
+    def _maybe_mark_trial_consumed(self, billing_customer, source_data):
+        """Mark BillingCustomer.metadata['trial_consumed']=True when RevenueCat
+        reports that the introductory offer (trial) has been consumed.
+
+        This is read by `get_billing_status` to avoid offering the trial UI
+        to users who have already consumed it via the store.
+        """
+        if not billing_customer or not isinstance(source_data, dict):
+            return
+        period_type = str(source_data.get("period_type") or "").upper()
+        intro_consumed = bool(source_data.get("intro_price_consumed"))
+        if period_type != "TRIAL" and not intro_consumed:
+            return
+        metadata = dict(billing_customer.metadata or {})
+        if metadata.get("trial_consumed"):
+            return
+        metadata["trial_consumed"] = True
+        billing_customer.metadata = metadata
+        billing_customer.save(update_fields=["metadata", "modified"])
 
     def _apply_grants_for_subscription(self, subscription, *, user, event_data=None):
         scope_type = "USER"

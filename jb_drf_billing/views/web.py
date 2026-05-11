@@ -1,3 +1,7 @@
+# TODO[phase-4-stripe]: These views serve web checkout flows. They are
+# wired against a stub Stripe adapter today. When the real adapter ships,
+# also gate write endpoints on `get_setting("ENABLE_STRIPE")` and return
+# a clear 503 when disabled. See PHASE_4_TODO.md.
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
