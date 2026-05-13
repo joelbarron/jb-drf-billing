@@ -1,6 +1,12 @@
 # jb-drf-billing
 
+[![PyPI Version](https://img.shields.io/pypi/v/jb-drf-billing?label=PyPI)](https://pypi.org/project/jb-drf-billing/)
+[![TestPyPI](https://img.shields.io/badge/TestPyPI-jb--drf--billing-1f6feb)](https://test.pypi.org/project/jb-drf-billing/)
+
 Reusable billing/subscriptions foundations for Django/DRF projects.
+
+PyPI: https://pypi.org/project/jb-drf-billing/  
+TestPyPI: https://test.pypi.org/project/jb-drf-billing/
 
 Pattern:
 - abstract models in this package
