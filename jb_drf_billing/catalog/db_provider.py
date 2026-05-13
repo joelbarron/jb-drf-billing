@@ -52,6 +52,12 @@ class DBCatalogProvider(BaseCatalogProvider):
                             "currency": pr.currency,
                             "countryCode": pr.country_code,
                             "amount": str(pr.amount),
+                            # IDs del provider — el cliente los necesita
+                            # para matchear contra los packages de
+                            # RevenueCat (mobile) y, en Phase 4, contra
+                            # los prices de Stripe (web).
+                            "revenuecatProductId": pr.revenuecat_product_id,
+                            "stripePriceId": pr.stripe_price_id,
                         }
                         for pr in prices_by_plan.get(p.id, [])
                     ],
