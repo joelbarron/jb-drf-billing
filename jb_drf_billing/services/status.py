@@ -2,6 +2,7 @@ from django.apps import apps
 
 from jb_drf_billing.conf import get_app_slug, get_scope_mode, get_setting, resolve_model
 from jb_drf_billing.services.entitlements import EntitlementResolver
+from jb_drf_billing.services.quotas import get_all_quota_usages
 
 
 def _is_trial_eligible(user, app_slug, *, billing_customer=None):
@@ -72,6 +73,11 @@ def get_billing_status(*, user, app_slug=None):
             "currentPeriodEnd": active_subscription.current_period_end,
             "cancelAtPeriodEnd": active_subscription.cancel_at_period_end,
             "environment": active_subscription.environment,
+            # Plataforma de compra (ios/android/web) cuando el adapter la
+            # guarde en raw_snapshot. Útil para mostrar "Comprado en App
+            # Store / Google Play / Web" en la UI sin tener que inferir
+            # por Platform.OS del cliente.
+            "platform": (active_subscription.raw_snapshot or {}).get("platform"),
         },
         "entitlements": {"user": entitlements_user, "profiles": profiles_summary},
         "purchaseChannels": {"ios": ["iap"], "android": ["iap", "web"], "web": ["web"]},
@@ -79,4 +85,12 @@ def get_billing_status(*, user, app_slug=None):
             "days": int(get_setting("TRIAL_DAYS") or 0),
             "eligible": _is_trial_eligible(user, slug, billing_customer=billing_customer),
         },
+        # Free-tier caps definidos por el integrador via settings
+        # `JB_DRF_BILLING["FREE_LIMITS"]`. El cliente los lee para mostrar
+        # contadores (ej. "2 de 2 cuentas") y bloquear UI proactivamente.
+        "limits": get_setting("FREE_LIMITS") or {},
+        # Uso actual de cuotas mensuales (mes calendario UTC). Cada entry:
+        # {used, limit, remaining, reset_at, reached}. Vacío si no hay
+        # quotas configuradas en `JB_DRF_BILLING["MONTHLY_QUOTAS"]`.
+        "quotas": get_all_quota_usages(user),
     }

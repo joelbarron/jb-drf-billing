@@ -14,6 +14,21 @@ DEFAULTS = {
     "DEFAULT_GRANT_PRIORITY": 100,
     "ACCESS_CHECK_BATCH_LIMIT": 100,
     "TRIAL_DAYS": 0,
+    # Límites del tier free, opcional. Cada integrador define las keys que
+    # necesita (ej. {"money_accounts": 2, "custom_categories": 0}). Se
+    # expone tal cual en `/billing/status.limits` para que el cliente
+    # pueda mostrar contadores y bloquear UI proactivamente.
+    "FREE_LIMITS": {},
+    # Cuotas mensuales (mes calendario UTC) por feature. Cada entry tiene
+    # `limit` (int) y `counter` (dotted path a callable que recibe
+    # `user, start, end` y devuelve int). Ej:
+    #   {"statement_imports": {
+    #       "limit": 15,
+    #       "counter": "api.finance.counters.count_statement_imports_this_month",
+    #   }}
+    # Se expone `quotas` con uso actual en `/billing/status` para que el
+    # cliente muestre contadores y bloquee UI proactivamente.
+    "MONTHLY_QUOTAS": {},
     "FEATURE_FLAGS": {},
     "PROVIDERS": {
         "revenuecat": {

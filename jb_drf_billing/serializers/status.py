@@ -7,3 +7,5 @@ class BillingStatusResponseSerializer(serializers.Serializer):
     entitlements = serializers.DictField(required=False)
     purchaseChannels = serializers.DictField(required=False)
     trial = serializers.DictField(required=False)
+    limits = serializers.DictField(required=False)
+    quotas = serializers.DictField(required=False)
